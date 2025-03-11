@@ -18,8 +18,8 @@ export class LeaguesComponent implements OnInit {
     this.leagues.set(this.leagueService.leagues)
   }
 
-  getTeamNames(teams: Map<String, String>): String[] {
-    return Array.from(teams.keys());
+  selectLeague(league: any): void {
+    this.leagueService.selectLeague(league);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { League } from '../model/league.type';
 
 @Injectable({
@@ -33,6 +33,12 @@ export class LeaguesService {
         ["Östersunds IK","ostersunds-ik"]])
     }
   ]
+
+  selectedLeague = signal<League | null>(null);
+
+  selectLeague(league: League): void {
+    this.selectedLeague.set(league);
+  }
 
 
   constructor() { }
