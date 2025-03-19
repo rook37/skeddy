@@ -13,7 +13,7 @@ def index():
             league_id = request.form['id']
             season = request.form['season']
         if(team_name and league_id and season):
-            output = skeddy.fetch_schedule(team_name,league_id,season)
+            output = skeddy.fetch_schedule(season,league_id,team_name)
         else:
             return jsonify({"success": False, "error": "Missing required parameters"}), 400
         
@@ -27,5 +27,5 @@ def index():
         return jsonify({"success": False, "error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5555, debug=True)
+    app.run(host='0.0.0.0',port=5000, debug=True)
 
