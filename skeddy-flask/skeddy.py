@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+import pytz
 from datetime import datetime
 from bs4 import BeautifulSoup
 
@@ -16,7 +17,7 @@ class GameMatch:
     def toString(self):
         print(self.date.strftime('%Y-%m-%d %H:%M:%S%z')+' - '+self.away+' @ '+self.home)
 
-def build_data(data,url):
+def build_data(data,url,tz):
     response = requests.get(url);
     request = BeautifulSoup(response.content,'html.parser');
     match_table = request.find('table', class_='table-games');
@@ -27,7 +28,9 @@ def build_data(data,url):
         if(len(homeAway)<2):
             continue
         date = datetime.strptime(date.text.strip(), '%Y-%m-%dT%H:%M:%S%z')
-        date = date.astimezone();
+        print(date)
+        date = date.astimezone(tz)
+        print(date)
         home = homeAway[0].text.strip()
         away = homeAway[1].text.strip()
         new_match = GameMatch(date,home,away)
@@ -39,14 +42,16 @@ def build_output(data,output):
         output.append(game)
     
     
-def fetch_schedule(season,league_id,team_name):
+def fetch_schedule(season,league_id,team_name,user_tz):
     try:
         url_prev = f'https://www.eliteprospects.com/games/{season}/*/{league_id}/{team_name}'
         url_post = f'https://www.eliteprospects.com/games/upcoming/{season}/*/{league_id}/{team_name}'
         data = []
         output =[]
-        build_data(data,url_prev)
-        build_data(data,url_post)
+        tz = pytz.timezone(user_tz)
+        print(tz)
+        build_data(data,url_prev,tz)
+        build_data(data,url_post,tz)
         build_output(data,output)
         df = pd.DataFrame(output)
         df['Start Date']=pd.to_datetime(df['Start Date'])
@@ -58,11 +63,6 @@ def fetch_schedule(season,league_id,team_name):
         #print('\n'+team_name+' schedule exported to '+team_name+'sched.csv! Enjoy the season!')
     except Exception as e:
         return {"success":False, "error":str(e)} 
-
-
-
-
-
 
 
 

@@ -12,8 +12,9 @@ def index():
             team_name = request.form['team']
             league_id = request.form['id']
             season = request.form['season']
-        if(team_name and league_id and season):
-            output = skeddy.fetch_schedule(season,league_id,team_name)
+            tz = request.form['timezone']
+        if(team_name and league_id and season and tz):
+            output = skeddy.fetch_schedule(season,league_id,team_name,tz)
         else:
             return jsonify({"success": False, "error": "Missing required parameters"}), 400
         
