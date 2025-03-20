@@ -17,20 +17,20 @@ export class LeaguesService {
       name:'HockeyAllsvenskan',
       leagueId:2,
       teams: new Map([
-        ["AIK","aik"],
-        ["Almtuna IS","almtuna-is"],
-        ["BIK Karlskoga","bik-karlskoga"],
-        ["Djurgårdens IF","djurgardens-if"],
-        ["IF Björklöven","if-bjorkloven"],
-        ["IK Oskarshamn","ik-oskarshamn"],
-        ["Kalmar HC","kalmar-hc"],
-        ["Mora IK","mora-ik"],
-        ["Nybro Vikings IF","nybro-vikings-if"],
-        ["Södertälje SK","sodertalje-sk"],
-        ["Tingsryds AIF","tingsryds-aif"],
-        ["Vimmerby HC","vimmerby-hc"],
-        ["Västerås IK","vasteras-ik"],
-        ["Östersunds IK","ostersunds-ik"]])
+        ["AIK","1"],
+        ["Almtuna IS","13"],
+        ["BIK Karlskoga","25"],
+        ["Djurgårdens IF","3"],
+        ["IF Björklöven","15"],
+        ["IK Oskarshamn","31"],
+        ["Kalmar HC","778"],
+        ["Mora IK","29"],
+        ["Nybro Vikings IF","335"],
+        ["Södertälje SK","10"],
+        ["Tingsryds AIF","33"],
+        ["Vimmerby HC","498"],
+        ["Västerås IK","308"],
+        ["Östersunds IK","1595"]])
     }
   ]
 
