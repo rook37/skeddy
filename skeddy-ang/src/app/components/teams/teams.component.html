@@ -3,7 +3,7 @@
     <div class="teams">    
         @for (team of getTeamNames(selectedLeague()?.teams); track team) {
             <mat-card class="team"><mat-card-title>{{ team }}</mat-card-title>
-            <mat-card-content><p>Download Schedule</p></mat-card-content></mat-card>
+            <mat-card-content><p><button (click)="downloadSchedule(team)">Download Schedule</button></p></mat-card-content></mat-card>
         } @empty {
           No teams available.
         }
