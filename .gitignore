@@ -1,0 +1,6 @@
+#Skip output
+*.csv
+*.txt
+kt
+.venv
+py
