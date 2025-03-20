@@ -9,12 +9,12 @@ CORS(app)
 def index():
     try:
         if request.method == 'POST':
-            team_name = request.form['team']
-            league_id = request.form['id']
-            season = request.form['season']
-            tz = request.form['timezone']
-        if(team_name and league_id and season and tz):
-            output = skeddy.fetch_schedule(season,league_id,team_name,tz)
+            data = request.json
+            team_id = data.get('id')
+            season = data.get('season')
+            tz = data.get('timezone')
+        if(team_id and season and tz):
+            output = skeddy.fetch_schedule(season,team_id,tz)
         else:
             return jsonify({"success": False, "error": "Missing required parameters"}), 400
         
