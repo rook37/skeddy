@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 import pytz
+from unidecode import unidecode
 from datetime import datetime
 from bs4 import BeautifulSoup
 
@@ -28,9 +29,9 @@ def build_data(data,url,tz):
         if(len(homeAway)<2):
             continue
         date = datetime.strptime(date.text.strip(), '%Y-%m-%dT%H:%M:%S%z')
-        print(date)
+    
         date = date.astimezone(tz)
-        print(date)
+        
         home = homeAway[0].text.strip()
         away = homeAway[1].text.strip()
         new_match = GameMatch(date,home,away)
@@ -42,10 +43,10 @@ def build_output(data,output):
         output.append(game)
     
     
-def fetch_schedule(season,league_id,team_name,user_tz):
+def fetch_schedule(season,team_id,user_tz):
     try:
-        url_prev = f'https://www.eliteprospects.com/games/{season}/*/{league_id}/{team_name}'
-        url_post = f'https://www.eliteprospects.com/games/upcoming/{season}/*/{league_id}/{team_name}'
+        url_prev = f'https://www.eliteprospects.com/games/{season}/all-leagues/{team_id}'
+        url_post = f'https://www.eliteprospects.com/games/upcoming/{season}/all-leagues/{team_id}'
         data = []
         output =[]
         tz = pytz.timezone(user_tz)
@@ -56,8 +57,7 @@ def fetch_schedule(season,league_id,team_name,user_tz):
         df = pd.DataFrame(output)
         df['Start Date']=pd.to_datetime(df['Start Date'])
         df.sort_values(by='Start Date',inplace=True)
-        print(df)
-        csv_path = team_name+'sched.csv'
+        csv_path = 'curr_sched.csv'
         df.to_csv(csv_path,index=False)
         return {"success": True, "csv_path": csv_path, "output": output}
         #print('\n'+team_name+' schedule exported to '+team_name+'sched.csv! Enjoy the season!')
